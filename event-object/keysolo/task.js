@@ -25,8 +25,24 @@ class Game {
       При неправильном вводе символа - this.fail();
       DOM-элемент текущего символа находится в свойстве this.currentSymbol.
      */
-  }
+      document.addEventListener('keyup', (event) => {
 
+      	if ((event.key === "Shift") || (event.key === "CapsLock")) {
+      		alert(`Нажата клавиша: ${event.key}`)
+      		return
+      	}
+      	const letter = this.currentSymbol.innerHTML.toLowerCase();
+      	let keys = event.key.toLowerCase();
+      	if (keys === letter) {
+      		this.success();
+      	} else {
+      		this.fail();
+      	};
+
+      });
+      }
+  
+// два символа одинаковые
   success() {
     if(this.currentSymbol.classList.contains("symbol_current")) this.currentSymbol.classList.remove("symbol_current");
     this.currentSymbol.classList.add('symbol_correct');
@@ -43,7 +59,7 @@ class Game {
     }
     this.setNewWord();
   }
-
+// символы отличаются
   fail() {
     if (++this.lossElement.textContent === 5) {
       alert('Вы проиграли!');
